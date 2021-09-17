@@ -1,0 +1,45 @@
+{% extends "WebApp/template.html" %}
+
+
+{% block form %}
+
+<div class="centered" style="margin-top:120px">
+    <div class="login-page-form-container">
+        <h1 class="page-title" style="color:white">Sign Up</h1>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="padding: 8px;">
+                {{ DisplayForm.name }}
+            </div>
+            <div style="padding: 8px;">
+                {{ DisplayForm.username }}
+            </div>
+            <div style="padding: 8px;">
+                {{ DisplayForm.password }}
+            </div>
+            <div style="padding: 8px;">
+                {{ DisplayForm.email }}
+            </div>
+            <div style="padding: 8px;">
+                <p style="display:inline-block; color:var(--light2)">Why are you using this?</p>
+                {{ DisplayForm.reason_for_use }}
+            </div>
+            <div style="padding: 8px;">
+                <p style="display:inline-block; color:var(--light2)">What type of user are you?</p>
+                {{ DisplayForm.user_type }}
+            </div>
+            <div style="padding: 8px;">
+               <span style="display:inline-block; color:var(--light2)">By signing up, you agree to the <a href="{% url 'terms' %}">terms and conditions</a></span>
+            </div>
+            <div style="padding: 15px;">
+                <input type="submit" class="buttons signup-page-buttons">
+            </div>
+            <div>
+                <p id="noUser">{{ errorMessage }}</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

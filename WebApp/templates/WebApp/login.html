@@ -1,0 +1,26 @@
+{% extends "WebApp/template.html" %}
+
+{% block form %}
+<div class="centered" style="margin-top:220px">
+    <div class="login-page-form-container">
+        <h1 class="page-title" style="color:white">Login</h1>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="padding: 8px;">
+                {{ loginForm.username }}
+            </div>
+            <div style="padding: 8px;">
+                {{ loginForm.password }}
+            </div>
+            <div style="padding: 15px;">
+                <input type="submit" class="login-page-buttons buttons">
+            </div>
+            <div>
+                <p id="noUser">{{ errorMessage }}</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

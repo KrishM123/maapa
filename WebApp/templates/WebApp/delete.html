@@ -1,0 +1,26 @@
+{% extends "WebApp/template.html" %}
+
+
+{% block fullpage %}
+<div style="background-color:var(--light2); text-align:center;">
+    <h1 class="page-title" style="padding-top:100px; padding-bottom:50px;">Delete File</h1>
+
+    <form method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="container custom-container" style="width:90%">
+            {% for key, row in resources.items %}
+            <div class="row">
+                {% for resource in row %}
+                <div class="col-md-3 choosefile-cols">
+                    {% if resource != None %}
+                    <button class="resource-button delete-file-button" type="submit" name="button" value={{ resource.id }}>{{resource.resource_name|slice:":-4"}}</button>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}

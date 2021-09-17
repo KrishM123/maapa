@@ -1,0 +1,202 @@
+{% extends "WebApp/template.html" %}
+
+{% block form %}
+
+{% load static %}
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'tf-idf.js' %}"></script>
+<script src="{% static 'typed.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"> </script>
+
+<div class="container custom-container" style="padding-top:40px;">
+    <div class="row">
+        <div class="col-md-6" id="query-col-info" style="padding-bottom: 30px;">
+            <h1 class="page-title">Ask Question</h1>
+            <h1 id="message"></h1>
+            <textarea id="id_query" rows="2" cols="70"></textarea>
+            <input type="submit" name="button" value="Submit" class="query-page-buttons buttons" id="submit_button">
+            <div id="loader" style="display: none;">
+                <img src="{% static 'images\loader.gif' %}">
+            </div>
+            <script>
+                document.getElementById('submit_button').addEventListener('click', function() {
+                    let query = document.getElementById('id_query').value;
+                    let submit_button = document.getElementById('submit_button');
+                    let loader = document.getElementById('loader');
+                    loader.style.display = "block";
+                    submit_button.disabled = true;
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'get_text' %}",
+                        dataType: 'json',
+                        success: function (data) {
+                            let text = data.text;
+
+                            let sentences = main(text, query);
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'askquestion' %}",
+                                data: {
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                    'sentences': JSON.stringify(sentences),
+                                    "query": query,
+                                    "tag": 'Submit',
+                                },
+                                success: function() {
+                                    window.location.href = "{% url 'askquestion' %}";
+                                    submit_button.disabled = false;
+                                    loader.style.display = "none";
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+
+            {% if show2 %}
+                <div id="page_layer">
+                    <h2>Is this the correct page?</h2>
+                    <div class="row" style="max-width: 350px; margin: auto;">
+                        <div class="col-md-6">
+                            <button id="correct_page" type="submit" name="button" value="correct_page" class="query-page-buttons buttons">Correct</button>
+                            <script>
+                                document.getElementById('correct_page').addEventListener('click', function() {
+                                    let page_layer = document.getElementById('page_layer');
+                                    let loader = document.getElementById('loader');
+                                    loader.style.display = 'block';
+                                    page_layer.style.display = 'none';
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "{% url 'get_page_info' %}",
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            let page = data.page;
+                                            let query = data.query;
+                                            let sentence_matches = main(page, query);
+                                            let sentence_paragraph = [];
+                                            for (let sentence of sentence_matches) {
+                                                sentence_paragraph.push(get_closest_sentences(sentence, page.split('\n\n')))
+                                            }
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "{% url 'askquestion' %}",
+                                                data: {
+                                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                                    'sentences': JSON.stringify(sentence_matches),
+                                                    'paragraphs': JSON.stringify(sentence_paragraph),
+                                                    "tag": 'Correct Page',
+                                                },
+                                                success: function() {
+                                                    window.location.href = "{% url 'askquestion' %}";
+                                                    page_layer.style.display = 'block';
+                                                    loader.style.display = 'none';
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                    
+                        
+                        <form method='POST' enctype="multipart/form-data">
+                            <div class="col-md-6">
+                                {% csrf_token %}
+                                <button type="submit" name="button" value="incorrect_page" class="query-page-buttons buttons">Incorrect</button>
+                            </div>
+                            {% if show2_back %}
+                                <div class="col-md-12">
+                                    <button type="submit" name="button" value="go_back" class="query-page-buttons buttons">Go Back</button>
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if show3 %}
+                <div id="paragraph_layer">
+                    <h2>Is this the correct paragraph?</h2>
+                    <div class="row" style="max-width: 350px; margin: auto;">
+                        <div class="col-md-6">
+                            <button id="correct_paragraph" type="submit" name="button" value="correct_paragraph" class="query-page-buttons buttons">Correct</button>
+
+                            <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+                            <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"> </script>
+                            <script>
+                                document.getElementById('correct_paragraph').addEventListener('click', function() {
+                                    let paragraph_layer = document.getElementById('paragraph_layer');
+                                    let loader = document.getElementById('loader');
+                                    loader.style.display = 'block';
+                                    paragraph_layer.style.display = 'none';
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "{% url 'get_paragraph_info' %}",
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            let paragraph = data.paragraph;
+                                            let query = data.query;
+                                            qna.load().then(model => {
+                                                model.findAnswers(query, paragraph).then(answers => {
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "{% url 'askquestion' %}",
+                                                        data: {
+                                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                                            'answers': JSON.stringify(answers),
+                                                            "tag": 'Answer',
+                                                        },
+                                                        success: function() {
+                                                            window.location.href = "{% url 'askquestion' %}";
+                                                            paragraph_layer.style.display = 'block';
+                                                            loader.style.display = 'none';
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+
+                        <form method='POST' enctype="multipart/form-data">
+                            <div class="col-md-6">
+                                {% csrf_token %}
+                                <button type="submit" name="button" value="incorrect_paragraph" class="query-page-buttons buttons">Incorrect</button>
+                            </div>
+                            {% if show3_back %}
+                                <div class="col-md-12">
+                                    <button type="submit" name="button" value="go_back_paragraph" class="query-page-buttons buttons">Go Back</button>
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if show_answer %}
+                <h1 class="page-title">Answer:</h1>
+                <p style="padding-bottom: 30px;" id="query-answer">{{ bert_answer }}</p>
+                {% if show4 %}
+                    <h2>Was this helpful?</h2>
+                    <form method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" name="button" value="answer_helpful" class="query-page-buttons buttons">Yes</button>
+                        <button type="submit" name="button" value="answer_not_helpful" class="query-page-buttons buttons">No</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="col-md-6" id="query-pdf-window">
+            {% load static %}
+            <embed src={{ chosen_file }} type="application/pdf" style="width:45vw; min-width:100px;" height="650px"/>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

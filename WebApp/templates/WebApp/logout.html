@@ -1,0 +1,16 @@
+{% extends "WebApp/template.html" %}
+
+{% block form %}
+<div class="centered" style="margin-top:220px">
+    <div class="login-page-form-container">
+        <h1 class="page-title" style="color:white">Logout</h1>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="padding: 15px;">
+                <input type="submit" class="logout-page-buttons buttons">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

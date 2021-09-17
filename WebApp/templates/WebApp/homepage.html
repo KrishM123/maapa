@@ -1,0 +1,67 @@
+{% extends "WebApp/template.html" %}
+
+{% block form %}
+
+{% load static %}
+
+<div class="container custom-container">
+    <div class="row heading-row-1">
+        <div class="col-md-7">
+            <p class="homepage-title">M.A.A.P.A</p>
+            <p class="homepage-typewriter"><span class="typed"></span></p>
+
+            <script src="{% static 'typed.min.js' %}"></script>
+            <script>
+                var typed = new Typed('.typed', {
+                    strings: ['My Amazing Awesome Personal Assistant<br><br>for homework ; )'],
+                    typeSpeed: 40,
+                    cursorChar: '_',
+                    showCursor: true,
+                })
+            </script>
+        </div>
+        {% if not loged_in %}
+            <div class="col-md-5" style="padding-top:18.75vw; padding-left:150px; padding-bottom:100px;">
+                <a class="buttons homepage-buttons" href="{% url 'login' %}"
+                    style="margin-right:50px; margin-bottom:50px;">Login</a>
+                <a class="buttons homepage-buttons" href="{% url 'signup' %}">Sign Up</a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row" style="background-color: white;">
+        <div class="col-md-6" style="padding-left: 6.3vw;">
+            <p class="page-title" style="margin-left:2.5vw; margin-top:9.4vw; font-size: 40px;">Instant Homework Help
+            </p>
+            <p class="help-text" style="margin-left:5vw; margin-top:27px;">- No waiting for tutors<br><br>
+                - Your computer becomes your teacher<br><br>
+                - Revolutionary N.L.P AI Solutions<br>
+                (Natural Language Processing)
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'images\3718985.jpg' %}"
+                style="height:31.25vw; margin-top:8px; margin-bottom:8px; margin-left:20px;">
+            <a href='https://www.freepik.com/vectors/school' style="font-size:8px; margin-left:300px;">School vector
+                created by pikisuperstar - www.freepik.com</a>
+        </div>
+    </div>
+    <div class="row" style="background-color: var(--dark1);">
+        <div style="padding-left:150px; padding-right:150px;">
+            <div class="col-md-4 homepage-img-col">
+                <img class="homepage-img" src="{% static 'images\Fast.png' %}">
+                <div class="homepage-img-title">Fast</div>
+                <div class="homepage-img-text">Uses cutting-edge N.L.P Algorithms</div>
+            </div>
+            <div class="col-md-4 homepage-img-col">
+                <img class="homepage-img" src="{% static 'images\Reliable.png' %}">
+                <div class="homepage-img-title">Reliable</div>
+                <div class="homepage-img-text">High accuracy rate</div>
+            </div>
+            <div class="col-md-4 homepage-img-col">
+                <img class="homepage-img" src="{% static 'images\Intuitive.png' %}">
+                <div class="homepage-img-title">Intuitive</div>
+                <div class="homepage-img-text">Self-learning AI</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

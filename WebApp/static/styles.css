@@ -1,0 +1,240 @@
+:root {
+    --dark1: #1a1a1a;
+    --dark2: #116466;
+    --light1: #FFCB9A;
+    --light2: #ebecee;
+}
+
+@font-face {
+  font-family: 'typewriter';
+  src: url('/static/fonts/atwriter.ttf') format("truetype");
+}
+
+.custom-navbar {
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--dark1);
+    color: var(--light2)
+}
+
+.col-border {
+    border: 3px solid black;
+}
+
+.custom-container {
+    margin: auto;
+    width: 100%;
+}
+
+.ask-question-form {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#query-col-info {
+    text-align: center;
+    padding-top: 60px;
+}
+
+#query-pdf-window {
+    text-align: right;
+    padding-right: 100px;
+}
+
+.page-title {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+#query-answer {
+    font-size: 30px;
+}
+
+.centered {
+    width: 100%;
+    text-align: center;
+}
+
+.login-page-form-container {
+    display: inline-block;
+    background-color: var(--dark1);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.outline {
+    border: 2px solid black;
+}
+
+.choosefile-cols {
+    text-align: center;
+    padding: 10px;
+    min-width: 300px;
+}
+
+#noUser {
+    color: red;
+}
+
+.delete-file-button:hover {
+    background-color: darkred;
+    color: white;
+    font-weight: normal;
+}
+
+.help-row {
+    padding-left: 100px;
+    padding-right: 80px;
+}
+
+.help-title {
+    font-size: 36px;
+    font-weight: bold; 
+}
+
+.help-text {
+    font-size: 20px;
+
+}
+
+.heading-row-1 {
+    min-height: 707px;
+    background-color: var(--dark1);
+}
+
+.homepage-title {
+    color: white;
+    font-family: 'Typewriter';
+    font-size: 12vw;
+    margin-left: 6.8vw;
+    margin-top: 50px;
+}
+
+.typed {
+    font-family: "Typewriter";
+    font-size: 30px;
+    color: white;
+}
+
+.homepage-typewriter {
+    margin-left: 6.8vw;
+    margin-top: 50px;
+}
+
+.typed-cursor {
+    font-family: "Typewriter";
+    font-size: 30px;
+    color: white;
+}
+
+.homepage-img {
+    height: 50px;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 100px;
+    margin-bottom: 25px;
+}
+
+.homepage-img-title {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.homepage-img-col {
+    text-align: center;
+}
+
+.homepage-img-text {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 100px;
+}
+
+
+
+
+
+.buttons {
+    display: inline-block;
+    vertical-align: top;
+    height: 46px;
+    width: 110px;
+    border-radius: 25px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.buttons:hover {
+    color: grey;
+    text-decoration: None;
+}
+
+.query-page-buttons {
+    background: #28ADDD;
+    background: -moz-linear-gradient(left, #28ADDD 0%, #3fe19a 100%);
+    background: -webkit-linear-gradient(left, #28ADDD 0%, #3fe19a 100%);
+    background: linear-gradient(to right, #28ADDD 0%, #3fe19a 100%);
+}
+
+.homepage-buttons {
+    background: #667BE5;
+    background: -moz-linear-gradient(left, #667BE5 0%, #754EA6 100%);
+    background: -webkit-linear-gradient(left, #667BE5 0%, #754EA6 100%);
+    background: linear-gradient(to right, #667BE5 0%, #754EA6 100%);
+    font-size: 30px;
+    height: 70px;
+    width: 160px;
+    border-radius: 50px;
+    padding-top: 12px;
+    text-align: center;
+}
+
+.login-page-buttons {
+    background: #FFD880;
+    background: -moz-linear-gradient(left, #FFD880 0%, #FF77A0 50%, #1DC5CD 100%);
+    background: -webkit-linear-gradient(left, #FFD880 0%, #FF77A0 50%, #1DC5CD 100%);
+    background: linear-gradient(to right, #FFD880 0%, #FF77A0 50%, #1DC5CD 100%);
+}
+
+.resource-button {
+    height: 300px;
+    width: 300px;
+    background-color: var(--dark1);
+    color: var(--light2);
+    font-size: 30px;
+    border-radius: 5px;
+}
+
+.resource-button:hover {
+    background-color: var(--light1);
+    color: var(--dark1);
+    font-weight: bold;
+}
+
+.logout-page-buttons {
+    background: #F5C65D;
+    background: -moz-linear-gradient(left, #F5C65D 0%, #E8592A 100%);
+    background: -webkit-linear-gradient(left, #F5C65D 0%, #E8592A 100%);
+    background: linear-gradient(to right, #F5C65D 0%, #E8592A 100%);
+}
+
+.signup-page-buttons {
+    background: #119842;
+    background: -moz-linear-gradient(left, #119842 0%, #EDE946 100%);
+    background: -webkit-linear-gradient(left, #119842 0%, #EDE946 100%);
+    background: linear-gradient(to right, #119842 0%, #EDE946 100%);
+}
+
+.upload-page-buttons {
+    background: #ED6F9D;
+    background: -moz-linear-gradient(left, #ED6F9D 0%, #F2A895 100%);
+    background: -webkit-linear-gradient(left, #ED6F9D 0%, #F2A895 100%);
+    background: linear-gradient(to right, #ED6F9D 0%, #F2A895 100%);
+}
