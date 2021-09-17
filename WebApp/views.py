@@ -338,7 +338,7 @@ def askquestion(request):
 
     if request.session["chosen_file"] != None:
         BERT_ANSWER = ''
-        CHOSEN_FILE = '/media/resources/' + request.session['chosen_file'].split('\\')[-1]
+        CHOSEN_FILE = '/media/resources/' + request.session['chosen_file'].split('/')[-1]
         SHOW_1 = True
         SHOW_2 = False
         SHOW_2_BACK = False
