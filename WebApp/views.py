@@ -527,7 +527,6 @@ def askquestion(request):
                     request.session["session_variable_limit"] -= 1
         except:
             pass
-        print(CHOSEN_FILE)
         return render(request, "WebApp/askquestion.html", {
             'bert_answer': BERT_ANSWER,
             'show1': SHOW_1,
